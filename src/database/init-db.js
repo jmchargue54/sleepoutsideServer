@@ -1,6 +1,9 @@
 // import MongoClient and ServerApiVersion from the mongodb library and import products from the products.js file.
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { products } from "./products.js";
+import * as argon2 from "argon2";
+
+const hashedPassword = await argon2.hash("password");
 
 //build the uri for our connection string
 const uri = process.env.MONGO_URI;
@@ -83,5 +86,7 @@ const seedProducts = async (db) => {
     console.error(error.message);
   }
 };
+
+
 
 init();
