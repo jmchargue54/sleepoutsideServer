@@ -1,15 +1,15 @@
 import mongodb from "../database/index.mts";
 import type {FindProductObj, Product} from "./types.mts";
 import { formatFields } from "../services/utils.mts";
-import type { Collection } from "mongodb";
+import type { Collection, Filter } from "mongodb";
 
 
 async function getAllProducts(find:FindProductObj) {
     const productsCollection:Collection<Product> = mongodb.getDb().collection<Product>('products');
 
-    const totalCount = await productsCollection.countDocuments(find);
+    const totalCount = await productsCollection.countDocuments(find.search as Filter<Product>);
 
-    const cursor = await productsCollection.find(find).skip(find.offset).limit(find.limit);
+    const cursor = await productsCollection.find(find.search as Filter<Product>).skip(find.offset).limit(find.limit);
 
     if(find.fieldFilters) {
         cursor.project(find.fieldFilters);
