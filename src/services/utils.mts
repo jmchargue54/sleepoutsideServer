@@ -1,5 +1,12 @@
 import type { QueryParams } from "../models/types.mts";
 
+export function getParam(param: string) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const value = urlParams.get('product')
+  return value;
+};
+
 export function formatFields(fields:string) {
     const fieldsArr = fields?.split(",");
     if(fieldsArr) {
